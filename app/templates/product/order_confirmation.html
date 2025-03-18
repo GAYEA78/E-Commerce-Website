@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmation - Walmart{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="text-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Your order has been placed successfully!</h1>
+    </div>
+
+    <div class="max-w-3xl mx-auto">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Order Confirmation</h2>
+                
+                <!-- Success Message -->
+                <div class="bg-green-50 border border-green-200 rounded-md p-4 mb-6">
+                    <p class="text-green-700">Your order has been placed successfully!</p>
+                </div>
+                
+                <!-- Order Details -->
+                <div class="bg-green-50 border border-green-200 rounded-md p-6 mb-8">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-green-500 rounded-full p-1 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold">Thank you for your order!</h3>
+                    </div>
+                    <p class="ml-9 mb-3">Your order has been received and is being processed.</p>
+                    <p class="ml-9">Order #{{ order_id }}</p>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4 border-b pb-2">Order Summary</h3>
+                    <div class="flex justify-between py-2">
+                        <span>Order Total</span>
+                        <span class="font-semibold">${{ "%.2f"|format(order_total) }}</span>
+                    </div>
+                    <div class="flex justify-between py-2 border-b">
+                        <span>Shipping Method</span>
+                        <span>{{ shipping_method }}</span>
+                    </div>
+                </div>
+                
+                <!-- What's Next Section -->
+                <div class="bg-gray-50 border border-gray-200 rounded-md p-6">
+                    <h3 class="text-xl font-semibold mb-4">What's Next?</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Your order will be processed and shipped according to your selected shipping method.</li>
+                    </ul>
+                </div>
+                
+                <!-- Return to Shopping Button -->
+                <div class="mt-8 text-center">
+                    <a href="{{ url_for('main.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md transition duration-300">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
