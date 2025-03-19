@@ -1,18 +1,10 @@
-# Databases Project 1 - Professor Aviram
+# E-Commerce-Website
 
 ## Overview of Project
 
-### Team Members and Roles
-
-- Omer Yurekli: Team Lead 
-- Jin Yang Chen: Development Engineer 
-- Omar Tall: General Developer
-- Arona Gaye: Testing Engineer / Documentation
-- Salamun Nuhin: Development Engineer
 
 ### Testing Approach
 
-Our testing strategy follows a feature-driven development approach with comprehensive test coverage. We implemented:
 
 1. **Unit Tests**: For individual components and services
    - Product service tests verify product retrieval, filtering, and inventory management
