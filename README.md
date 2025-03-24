@@ -17,7 +17,7 @@
    - Cart-to-order conversion during checkout
    - Session persistence across multiple requests
 
-3. **Test Coverage**: Our tests cover approximately 85% of the codebase, focusing on:
+3. **Test Coverage**: Tests cover approximately 85% of the codebase, focusing on:
    - Critical user flows (authentication, product browsing, cart management, checkout)
    - Database operations (CRUD operations, inventory updates)
    - Error handling (form validation, inventory checks)
