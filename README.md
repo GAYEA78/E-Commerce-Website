@@ -84,11 +84,11 @@ poetry install
 eval "$(poetry env activate)"
 ```
 
-### Windows/Powershell
+### Windows
 
 ```bash
 # Activate Python Virtual Environment
-.venv\Scripts\Activate.ps1
+.venv\Scripts\Activate.bat
 ```
 
 ### Set up environment variables
