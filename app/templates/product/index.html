@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.ProductName }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto p-6">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="p-8">
+            {% for message in get_flashed_messages() %}
+                {% if 'removed' not in message.lower() %}
+                <div class="mb-4 p-4 rounded-md {% if 'error' in message %}bg-red-50 border-red-200{% else %}bg-green-50 border-green-200{% endif %}">
+                    <p class="{% if 'error' in message %}text-red-700{% else %}text-green-700{% endif %}">{{ message }}</p>
+                </div>
+                {% endif %}
+            {% endfor %}
+
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">{{ product.ProductName }}</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <p class="text-lg text-gray-700 mb-2">
+                        <strong>Price:</strong> ${{ "%.2f"|format(product.UnitPrice) }}
+                    </p>
+                    <p class="text-lg text-gray-700 mb-2">
+                        <strong>In Stock:</strong> {{ product.UnitsInStock }}
+                    </p>
+                    <p class="text-lg text-gray-700 mb-2">
+                        <strong>Category:</strong> {{ category.CategoryName if category else 'Not Available' }}
+                    </p>
+                    <p class="text-lg text-gray-700 mb-4">
+                        <strong>Supplier:</strong> {{ supplier.CompanyName if supplier else "Not Available" }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-lg font-semibold text-gray-800 mb-2">Description:</p>
+                    <p class="text-gray-600">{{ product.QuantityPerUnit }}</p>
+                </div>
+            </div>
+
+            <form action="{{ url_for('product.add_to_cart', product_id=product.ProductID) }}" method="POST"
+                class="mt-6">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center">
+                        <button type="button" id="decrease-qty"
+                            class="bg-gray-200 text-gray-700 px-3 py-1 rounded-l hover:bg-gray-300">
+                            -
+                        </button>
+                        <input type="number" name="quantity" id="quantity"
+                            class="w-16 text-center border-t border-b border-gray-200" min="1"
+                            max="{{ product.UnitsInStock }}" value="1" readonly>
+                        <button type="button" id="increase-qty"
+                            class="bg-gray-200 text-gray-700 px-3 py-1 rounded-r hover:bg-gray-300">
+                            +
+                        </button>
+                    </div>
+
+                    <button type="submit"
+                        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-300">
+                        Add to Cart
+                    </button>
+                </div>
+            </form>
+
+            <a href="{{ url_for('main.index') }}"
+                class="inline-block mt-6 text-blue-600 hover:text-blue-800 transition duration-300">
+                ← Back to Products
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Hide the spinners (up/down arrows) in the number input */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const quantityInput = document.getElementById('quantity');
+        const decreaseButton = document.getElementById('decrease-qty');
+        const increaseButton = document.getElementById('increase-qty');
+        const maxStock = parseInt(quantityInput.getAttribute('max'));
+
+        decreaseButton.addEventListener('click', function () {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+
+        increaseButton.addEventListener('click', function () {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue < maxStock) {
+                quantityInput.value = currentValue + 1;
+            } else {
+                alert(`Only ${maxStock} units available in stock!`);
+            }
+        });
+
+        // Prevent manual entry of invalid quantities
+        quantityInput.addEventListener('change', function() {
+            let value = parseInt(this.value);
+            if (value > maxStock) {
+                alert(`Only ${maxStock} units available in stock!`);
+                this.value = maxStock;
+            } else if (value < 1) {
+                this.value = 1;
+            }
+        });
+    });
+</script>
+
+{% endblock %}
