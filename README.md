@@ -56,7 +56,7 @@
    - Enhanced Customers table with regional classification
    - Added BLOB image data to Categories table
 
-## Quick Start
+## Quick Start (Follow from CMD command prompt terminal)
 
 ```bash
 Clone the repo
