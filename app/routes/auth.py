@@ -49,19 +49,12 @@ def register():
             flash("All fields are required", "error")
             return render_template('auth/register.html')
 
+        if len(customer_id) != 5:
+            flash("Customer ID must be exactly 5 characters", "error")
+            return render_template('auth/register.html')
+
         db = get_db()
         try:
-            # Check if customer exists
-            customer = db.execute(
-                'SELECT CustomerID FROM Customers WHERE CustomerID = ?',
-                [customer_id]
-            ).fetchone()
-
-            if not customer:
-                flash("Invalid Customer ID", "error")
-                return render_template('auth/register.html')
-
-            # Create new user
             hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
             db.execute(
                 'INSERT INTO Users (customer_id, username, hashed_password) VALUES (?, ?, ?)',
@@ -73,10 +66,11 @@ def register():
             return redirect(url_for('auth.login'))
 
         except sqlite3.IntegrityError:
-            flash("Username already exists or Customer ID already registered", "error")
+            flash("Username already exists", "error")
             return render_template('auth/register.html')
 
     return render_template('auth/register.html')
+
 
 @auth_bp.route("/profile")
 @login_required 
