@@ -1,5 +1,5 @@
 # E-Commerce-Website
-DEMO ON PORTFOLIO
+You can run the app directly from its deployed website: https://e-commerce.aronagaye.me/
 ## Overview of Project
 
 
@@ -57,6 +57,7 @@ DEMO ON PORTFOLIO
    - Added BLOB image data to Categories table
 
 ## Quick Start (Follow from CMD command prompt terminal)
+If you want to run it direrctly online: https://e-commerce.aronagaye.me/ otherwise follow instructions below
 
 ```bash
 Clone the repo
