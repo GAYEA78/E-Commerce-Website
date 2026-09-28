@@ -19,9 +19,9 @@
       <li>
         <a href="{{ url_for('product.view_cart') }}" class="cart-link hover:text-yellow-300">
           🛒 Cart
-          {% if cart and cart.items %}
+          {% if cart_count %}
             <span class="bg-yellow-300 text-blue-600 px-2 py-1 rounded-full text-xs ml-1">
-              {{ cart.items|length }}
+              {{ cart_count }}
             </span>
           {% endif %}
         </a>
