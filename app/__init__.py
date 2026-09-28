@@ -40,4 +40,14 @@ def create_app():
     # Register auth blueprint
     app.register_blueprint(auth_bp)
 
+@app.context_processor
+def inject_cart_count():
+        count = 0
+        try:
+            items = get_cart_items()
+            count = sum(int(item["quantity"]) for item in items)
+        except Exception:
+            pass
+        return {"cart_count": count}
+
     return app
