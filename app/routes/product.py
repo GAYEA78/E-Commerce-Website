@@ -17,6 +17,11 @@ from app.utils.database import get_db
 
 product_bp = Blueprint("product", __name__)
 
+SHIPPING_COSTS = {
+    "standard": 0.00,
+    "priority": 9.99,
+    "express": 19.99,
+}
 
 log = setup_logger(__name__)
 
@@ -135,22 +140,24 @@ def confirm_order():
     elif shipping_method.lower() == "priority":
         formatted_shipping_method = "Priority (2-3 business days)"
     
-    # Get cart for order total
+
     cart_service = CartService()
     cart = get_cart()
     cart_total = sum(item.TotalPrice for item in cart.items.values())
+    shipping_cost = SHIPPING_COSTS.get(shipping_method.lower(), 0)
+    order_total = round(cart_total + shipping_cost, 2)
     
-    # Generate a simple order ID (in a real app, this would come from the database)
+
     import random
     order_id = random.randint(10000, 99999)
     
-    # Here you would handle the order confirmation logic, such as saving the order to the database
+
     
-    # Update product inventory
+
     product_service = ProductService()
     inventory_updated = True
     
-    # First check if all products have enough inventory
+
     for item in cart.items.values():
         product = product_service.get_product_by_id(item.ProductID)
         if not product or product.UnitsInStock < item.Quantity:
@@ -178,7 +185,9 @@ def confirm_order():
         return render_template(
             "product/order_confirmation.html",
             order_id=order_id,
-            order_total=cart_total,
+            order_total=order_total,
+            subtotal=cart_total,
+            shipping_cost=shipping_cost,
             shipping_method=formatted_shipping_method
         )
     else:
